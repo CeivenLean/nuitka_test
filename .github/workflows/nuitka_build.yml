@@ -64,15 +64,13 @@ jobs:
           fi
           eval "python -m nuitka $cmd $additional_args main.py"
             
-      - name: Compress to ZIP for Windows & Linux
-        if: ${{ runner.os == 'Windows' || runner.os == 'Linux' }}
+      - name: Compress to ZIP
         run: |
-          7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.dist/*
-          
-      - name: Compress to ZIP for Macos
-        if: ${{ runner.os == 'macOS' }}
-        run: |
-          7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.app/          
+          if [[ ${{ runner.os }} == 'macOS' ]]; then
+            7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.app/
+          else
+            7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.dist/*
+          fi
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
