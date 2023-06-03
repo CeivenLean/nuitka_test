@@ -67,9 +67,9 @@ jobs:
       - name: Folder Rename Before Upload
         run: |
           if [[ ${{ runner.os }} == 'Linux' ]]; then
-            mv build/main.dist build/${{ env.EXE_NAME }}
+            mv build/main.dist/* build/${{ env.EXE_NAME }}/*
           elif [[ ${{ runner.os }} == 'Windows' ]]; then
-            move build/main.dist build/${{ env.EXE_NAME }}
+            move build/main.dist/* build/${{ env.EXE_NAME }}/*
           fi
         
       - name: Upload Artifacts
