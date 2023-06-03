@@ -18,11 +18,12 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest]
       
     runs-on: ${{ matrix.os }}
     env:
-      EXE_NAME: ${{ github.repository }}
+      EXE_NAME: $(basename $GITHUB_REPOSITORY)
     steps:
     
       # Check-out repository
