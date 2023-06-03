@@ -45,8 +45,7 @@ jobs:
 
       - name: Start Build
         run: |
-          cmd="python -m nuitka \\
-            --standalone \\
+          cmd="--standalone \\
             --assume-yes-for-downloads \\
             --output-dir=build \\
             --output-file=${{ env.EXE_NAME }} \\
@@ -63,7 +62,7 @@ jobs:
             echo "Unsupported OS: ${{ runner.os }}"
             exit 1
           fi
-          eval "$cmd $additional_args main.py"
+          eval "python -m nuitka $cmd $additional_args main.py"
             
       - name: Compress to ZIP for Windows & Linux
         if: ${{ runner.os == 'Windows' || runner.os == 'Linux' }}
