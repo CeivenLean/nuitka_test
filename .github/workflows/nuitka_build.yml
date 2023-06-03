@@ -48,7 +48,7 @@ jobs:
           cmd="python -m nuitka main.py \
             --standalone \
             --assume-yes-for-downloads \
-            --output-dir=build \\
+            --output-dir=build \
             --output-file=${{ env.EXE_NAME }} \
             --enable-plugin=pyside6 \
             --disable-console \
