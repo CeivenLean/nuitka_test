@@ -45,30 +45,15 @@ jobs:
 
       - name: Start Build
         run: |
-          cmd="python -m nuitka main.py \\
-            --standalone \\
-            --assume-yes-for-downloads \\
+          cmd="python -m nuitka main.py \
+            --standalone \
+            --assume-yes-for-downloads \
             --output-dir=build \\
-            --output-file=${{ env.EXE_NAME }} \\
-            --enable-plugin=pyside6 \\
-            --disable-console \\
+            --output-file=${{ env.EXE_NAME }} \
+            --enable-plugin=pyside6 \
+            --disable-console \
             "
-          if [[ ${{ runner.os }} == 'macOS' ]]; then
-            additional_args="--macos-create-app-bundle \\
-              --macos-app-version=1.0
-            "
-          elif [[ ${{ runner.os }} == 'Linux' ]]; then
-            additional_args="--disable-console \\
-            "
-          elif [[ ${{ runner.os }} == 'Windows' ]]; then
-            additional_args="--disable-console \\
-            "
-          else
-            echo "Unsupported OS: ${{ runner.os }}"
-            exit 1
-          fi
-
-          $cmd $additional_args
+          $cmd
             
       - name: Compress to ZIP for Windows & Linux
         if: ${{ runner.os == 'Windows' || runner.os == 'Linux' }}
