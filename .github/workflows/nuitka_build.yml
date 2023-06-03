@@ -64,12 +64,12 @@ jobs:
           fi
           eval "python -m nuitka $cmd $additional_args main.py"
             
-      - name: Compress to ZIP
+      - name: Folder Rename Before Upload
         run: |
-          if [[ ${{ runner.os }} == 'macOS' ]]; then
-            7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.app/
-          else
-            7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.dist/*
+          if [[ ${{ runner.os }} == 'Linux' ]]; then
+            mv build/main.dist build/${{ env.EXE_NAME }}
+          elif [[ ${{ runner.os }} == 'Windows' ]]; then
+            move build/main.dist build/${{ env.EXE_NAME }}
           fi
         
       - name: Upload Artifacts
@@ -77,5 +77,6 @@ jobs:
         with:
           name: ${{ runner.os }} Build
           path: |
-            build/*.zip
+            build/${{ env.EXE_NAME }}/*
+            build/*.app
             
