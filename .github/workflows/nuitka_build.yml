@@ -23,6 +23,7 @@ jobs:
       
     runs-on: ${{ matrix.os }}
     env:
+      # EXE_NAME: "product"
       EXE_NAME: $(basename $GITHUB_REPOSITORY)
     steps:
     
@@ -43,27 +44,16 @@ jobs:
           pip install -r requirements.txt
 
       # Build python script into a stand-alone exe
-      - uses: Nuitka/Nuitka-Action@main
-        with:
-          script-name: main.py
-          access-token: ${{ secrets.NUITKA_COMMERCIAL_ACCESS_TOKEN }}
-          standalone: true
-          onefile: false
-          show-scons: false
-          enable-plugins: pyside6
-          # include-package-data: qt_material
-          # include-data-dir: ./images=./images,./resources=./resources
-          enable-console: false
-          disable-console: true
-          # Windows specific controls
-          # windows-icon-from-ico: ./resources/app.ico
-          windows-uac-admin: false
-          windows-uac-uiaccess: false
-          windows-company-name: UNDO
-          # Macos specific controls
-          macos-create-app-bundle: true
-          # macos-app-icon: ./resources/app.ico
-          macos-app-version: 1.0
+      - name: build with nuitka
+        run: |
+          python -m nuitka main.py \
+          --standalone \
+          --assume-yes-for-downloads \
+          --output-dir=build \
+          --output-file=${{ env.EXE_NAME }} \
+          --enable-plugin=pyside6 \
+          --disable-console \
+          --macos-create-app-bundle
           
       - name: Compress to ZIP for Windows & Linux
         if: ${{ runner.os == 'Windows' || runner.os == 'Linux' }}
