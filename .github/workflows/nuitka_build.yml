@@ -21,7 +21,8 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
       
     runs-on: ${{ matrix.os }}
-
+    env:
+      EXE_NAME: ${{ github.repository }}
     steps:
     
       # Check-out repository
@@ -66,12 +67,12 @@ jobs:
       - name: Compress to ZIP for Windows & Linux
         if: ${{ runner.os == 'Windows' || runner.os == 'Linux' }}
         run: |
-          7z a build/main_${{ runner.os }}.zip ./build/main.dist/*
+          7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.dist/*
           
       - name: Compress to ZIP for Macos
         if: ${{ runner.os == 'macOS' }}
         run: |
-          7z a build/main_${{ runner.os }}.zip ./build/main.app/          
+          7z a build/${{ env.EXE_NAME }}_${{ runner.os }}.zip ./build/main.app/          
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
