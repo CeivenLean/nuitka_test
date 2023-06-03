@@ -45,12 +45,12 @@ jobs:
 
       - name: Start Build
         run: |
-          cmd="python -m nuitka main.py" \\
-            "--standalone" \\
-            "--assume-yes-for-downloads" \\
-            "--output-dir=build" \\
-            "--output-file=${{ env.EXE_NAME }}" \\
-            "--enable-plugin=pyside6" \\
+          cmd="python -m nuitka main.py \\
+            "--standalone \\
+            "--assume-yes-for-downloads \\
+            "--output-dir=build \\
+            "--output-file=${{ env.EXE_NAME }} \\
+            "--enable-plugin=pyside6 \\
             "--disable-console"
 
           if [[ ${{ runner.os }} == 'macOS' ]]; then
