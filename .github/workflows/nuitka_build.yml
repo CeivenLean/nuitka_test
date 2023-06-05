@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         # os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
       
     runs-on: ${{ matrix.os }}
     env:
@@ -68,8 +68,7 @@ jobs:
           if [[ ${{ runner.os }} == 'Linux' ]]; then
             mv build/main.dist build/${{ env.EXE_NAME }}
           elif [[ ${{ runner.os }} == 'Windows' ]]; then
-            cd build
-            ren main.dist ${{ env.EXE_NAME }}
+            cd build && ren main.dist ${{ env.EXE_NAME }}
           fi
         
       - name: Upload Artifacts
