@@ -23,8 +23,8 @@ jobs:
       
     runs-on: ${{ matrix.os }}
     env:
-      # EXE_NAME: "product"
-      EXE_NAME: $(basename $GITHUB_REPOSITORY)
+      EXE_NAME: "product"
+      # EXE_NAME: $(basename $GITHUB_REPOSITORY)
     steps:
     
       # Check-out repository
@@ -65,7 +65,9 @@ jobs:
           
       - name: linux mv
         run: |
-          mv build/main.dist build/${{ env.EXE_NAME }}
+          if [[ ${{ runner.os }} == 'Linux' ]]; then
+            mv build/main.dist build/${{ env.EXE_NAME }}
+          fi
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
