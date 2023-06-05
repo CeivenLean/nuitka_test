@@ -45,11 +45,27 @@ jobs:
 
       - name: Start Build
         run: |
-          ls
-          mkdir -p build/main_dist
-          ls
-          mv build/main_dist build/ren_test
-          ls
+          cmd="--standalone \\
+            --assume-yes-for-downloads \\
+            --output-dir=build \\
+            --output-file=${{ env.EXE_NAME }} \\
+            --enable-plugin=pyside6 \\
+            --disable-console"
+          if [[ ${{ runner.os }} == 'macOS' ]]; then
+            additional_args="--macos-create-app-bundle"
+          elif [[ ${{ runner.os }} == 'Linux' ]]; then
+            additional_args=""
+          elif [[ ${{ runner.os }} == 'Windows' ]]; then
+            additional_args=""
+          else
+            echo "Unsupported OS: ${{ runner.os }}"
+            exit 1
+          fi
+          eval "python -m nuitka $cmd $additional_args main.py"
+          
+      - name: Test mv
+        run: |
+          mv build/main.dist build/maindist2
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -57,5 +73,6 @@ jobs:
           name: ${{ runner.os }} Build
           path: |
             ./build/main.dist/*
+            ./build/maindist2/*
             ./build/*.app
             
