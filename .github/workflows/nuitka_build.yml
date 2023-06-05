@@ -41,13 +41,14 @@ jobs:
 
       - run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          # pip install -r requirements.txt
 
       - name: Start Build
         run: |
-          mkdir build/main_dist
           ls
-          mv build/main_dist build/ren_test
+          mkdir main_dist
+          ls
+          mv main_dist ren_test
           ls
         
       - name: Upload Artifacts
