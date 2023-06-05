@@ -63,20 +63,12 @@ jobs:
             exit 1
           fi
           eval "python -m nuitka $cmd $additional_args main.py"
-            
-      - name: Folder Rename Before Upload
-        run: |
-          if [[ ${{ runner.os }} == 'Linux' ]]; then
-            mv build/main.dist/* build/${{ env.EXE_NAME }}/*
-          elif [[ ${{ runner.os }} == 'Windows' ]]; then
-            move build/main.dist/* build/${{ env.EXE_NAME }}/*
-          fi
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} Build
           path: |
-            build/${{ env.EXE_NAME }}/*
-            build/*.app
+            ./build/main.dist/*
+            ./build/*.app
             
