@@ -46,9 +46,9 @@ jobs:
       - name: Start Build
         run: |
           ls
-          mkdir ./build/main_dist
+          mkdir -p /build/main_dist
           ls
-          mv ./build/main_dist ./build/ren_test
+          mv /build/main_dist /build/ren_test
           ls
         
       - name: Upload Artifacts
