@@ -49,11 +49,11 @@ jobs:
           python -m nuitka main.py --standalone --assume-yes-for-downloads --output-dir=build --output-file=${{ env.EXE_NAME }} --enable-plugin=pyside6 --disable-console
           cd build && ren main.dist ${{ env.EXE_NAME }}
           
-      - name: linux mv
+      - name: Start Build for Linux
+        if: ${{ runner.os == 'Linux' }}
         run: |
-          if [[ ${{ runner.os }} == 'Linux' ]]; then
-            mv build/main.dist build/${{ env.EXE_NAME }}
-          fi
+          python -m nuitka main.py --standalone --assume-yes-for-downloads --output-dir=build --output-file=${{ env.EXE_NAME }} --enable-plugin=pyside6 --disable-console
+          cd build && mv main.dist ${{ env.EXE_NAME }}          
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
