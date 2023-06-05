@@ -65,11 +65,7 @@ jobs:
           
       - name: linux mv
         run: |
-          if [[ ${{ runner.os }} == 'Linux' ]]; then
-            mv build/main.dist build/${{ env.EXE_NAME }}
-          elif [[ ${{ runner.os }} == 'Windows' ]]; then
-            cd build && ren main.dist ${{ env.EXE_NAME }}
-          fi
+          mv build/main.dist build/${{ env.EXE_NAME }}
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
