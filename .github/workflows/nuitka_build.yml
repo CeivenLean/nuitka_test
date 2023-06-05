@@ -18,8 +18,8 @@ jobs:
 
     strategy:
       matrix:
-        # os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        # os: [windows-latest]
       
     runs-on: ${{ matrix.os }}
     env:
@@ -53,7 +53,13 @@ jobs:
         if: ${{ runner.os == 'Linux' }}
         run: |
           python -m nuitka main.py --standalone --assume-yes-for-downloads --output-dir=build --output-file=${{ env.EXE_NAME }} --enable-plugin=pyside6 --disable-console
-          cd build && mv main.dist ${{ env.EXE_NAME }}          
+          cd build && mv main.dist ${{ env.EXE_NAME }}
+          
+      - name: Start Build for Mac
+        if: ${{ runner.os == 'macOS' }}
+        run: |
+          python -m nuitka main.py --standalone --assume-yes-for-downloads --output-dir=build --output-file=${{ env.EXE_NAME }} --enable-plugin=pyside6 --disable-console --macos-create-app-bundle
+          cd build && mv main.app ${{ env.EXE_NAME }}.app
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -61,5 +67,5 @@ jobs:
           name: ${{ env.EXE_NAME }}_for_${{ runner.os }}
           path: |
             build/${{ env.EXE_NAME }}/*
-            build/*.app
+            build/${{ env.EXE_NAME }}.app
             
