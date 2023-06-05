@@ -65,13 +65,13 @@ jobs:
           
       - name: linux mv
         run: |
-          mv build/main.dist build/${{ env.EXE_NAME }}
+          mv build/main.dist build/product
         
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.EXE_NAME }}_for_${{ runner.os }}
           path: |
-            build/${{ env.EXE_NAME }}/*
+            build/product/*
             build/*.app
             
