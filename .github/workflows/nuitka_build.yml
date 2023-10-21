@@ -1,5 +1,5 @@
 
-name: Build Executable for Windows/MacOS/Linux
+name: Build Executable for Windows/MacOS/Linux(ubuntu)
 
 # Controls when the workflow will run
 on:
@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        # os: [windows-latest]
+        # optional os: windows-2022, windows-2019, macos-12, macos-11, ubuntu-22.04, ubuntu-20.04
       
     runs-on: ${{ matrix.os }}
     env:
@@ -49,7 +49,7 @@ jobs:
           python -m nuitka main.py --standalone --assume-yes-for-downloads --output-dir=build --output-file=${{ env.EXE_NAME }} --enable-plugin=pyside6 --disable-console
           cd build && ren main.dist ${{ env.EXE_NAME }}
           
-      - name: Start Build for Linux
+      - name: Start Build for Linux(ubuntu)
         if: ${{ runner.os == 'Linux' }}
         run: |
           python -m nuitka main.py --standalone --assume-yes-for-downloads --output-dir=build --output-file=${{ env.EXE_NAME }} --enable-plugin=pyside6 --disable-console
