@@ -1,4 +1,2 @@
 Nuitka
-ordered-set
-zstandard
 PySide6

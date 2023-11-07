@@ -29,7 +29,6 @@ class MyWidget(QWidget):
         self.text.setText(random.choice(self.hello))
 
 
-# python -m nuitka --standalone --follow-imports --enable-plugin=pyside6 --macos-create-app-bundle --disable-console main.py
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
