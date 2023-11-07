@@ -1,4 +1,3 @@
-import os
 import sys
 import random
 from PySide6.QtWidgets import (QApplication, QLabel, QPushButton,
