@@ -3,9 +3,9 @@ name: Build Executable for Windows/MacOS/Linux(ubuntu)
 
 # Controls when the workflow will run
 on:
-  # build every monday at 00:15 UTC
   schedule:
-    - cron:  '30 03 * * 1'
+    # build every monday at 00:15 UTC
+    - cron:  '15 0 * * 1'
     
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
